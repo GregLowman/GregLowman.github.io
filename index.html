@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gregory Lowman — Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212,168,75,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,168,75,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,168,75,0.07) 0%, transparent 70%);
+      top: 10%; right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; max-width: 900px; }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1px solid rgba(212,168,75,0.3);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 .accent { color: var(--accent); }
+
+    .hero-title {
+      font-family: var(--ff-mono);
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-bio {
+      font-size: 1.05rem;
+      color: #a8b4c8;
+      max-width: 620px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: #a8b4c8;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+
+    .about-text p strong { color: var(--text); font-weight: 500; }
+
+    .about-stats { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .stat-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+      border-radius: 2px;
+    }
+
+    .stat-label {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value { font-size: 0.95rem; color: var(--text); }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .skill-group:hover { border-color: rgba(212,168,75,0.4); }
+
+    .skill-group-title {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--bg2); }
+
+    /* Featured */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .project-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .project-card.featured {
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+    }
+
+    .project-card.featured:hover {
+      border-color: rgba(212,168,75,0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+
+    .project-card.featured:hover::before { transform: scaleX(1); }
+
+    .project-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .project-number {
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      color: rgba(212,168,75,0.4);
+      letter-spacing: 0.1em;
+    }
+
+    .case-study-badge {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(212,168,75,0.12);
+      color: var(--accent);
+      border: 1px solid rgba(212,168,75,0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    .project-name {
+      font-family: var(--ff-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .project-desc {
+      font-size: 0.92rem;
+      color: #8a96aa;
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .project-tag {
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    .project-cta {
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: auto;
+      transition: gap 0.2s;
+    }
+
+    .project-card.featured:hover .project-cta { gap: 0.7rem; }
+    .project-cta::after { content: '→'; }
+
+    /* Additional projects */
+    .additional-label {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .additional-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+
+    .additional-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s;
+    }
+
+    .additional-card:hover { border-color: rgba(212,168,75,0.25); }
+
+    .additional-name {
+      font-family: var(--ff-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .additional-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .additional-link {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.2s;
+    }
+
+    .additional-link:hover { color: var(--accent); }
+    .additional-link::after { content: '→'; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); }
+
+    .contact-inner { max-width: 700px; }
+
+    .contact-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.1rem 1.5rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .contact-item:hover {
+      border-color: rgba(212,168,75,0.4);
+      transform: translateX(4px);
+    }
+
+    .contact-icon {
+      font-size: 1.1rem;
+      width: 28px;
+      text-align: center;
+      color: var(--accent);
+      font-family: var(--ff-mono);
+    }
+
+    .contact-label {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .contact-value { font-size: 0.92rem; color: var(--text); }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .additional-grid { grid-template-columns: 1fr; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">GL.dev</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <span class="hero-tag">Available for Opportunities</span>
+      <h1>Gregory<br><span class="accent">Lowman.</span></h1>
+      <p class="hero-title">Software Engineer &nbsp;·&nbsp; Quantum Computing Researcher &nbsp;·&nbsp; CU Boulder</p>
+      <p class="hero-bio">
+        CS &amp; Physics double major with a focus on quantum computing R&amp;D. I build software that bridges rigorous scientific thinking with modern engineering — from full-stack web applications to data pipelines and simulation tools.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="btn btn-outline">GitHub Profile</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <p class="section-label">Background</p>
+      <div class="divider"></div>
+      <h2 class="section-title">About Me</h2>
+      <div class="about-grid">
+        <div class="about-text fade-in">
+          <p>I'm a <strong>Computer Science and Physics double major</strong> with a minor in Quantum Engineering at the University of Colorado Boulder, transferred from Florida State College at Jacksonville where I completed my Associate's degree.</p>
+          <p>My focus is <strong>quantum computing</strong> — specifically research and development. I believe quantum systems have the potential to power high-fidelity simulations that could meaningfully accelerate both lab work and scientific research. My goal is to be part of a team making that happen.</p>
+          <p>My most recent project was a semester-long perovskite solar cell degradation study — working with teammates, I led all the programming work: data collection pipelines, statistical analysis, visualization, and interpretation of results in Python.</p>
+          <p>I'm actively developing my research skills and applying my CS background to real scientific problems, while also shipping full-stack products and automation tools along the way.</p>
+        </div>
+        <div class="about-stats fade-in">
+          <div class="stat-card">
+            <div class="stat-label">Education</div>
+            <div class="stat-value">B.S. Computer Science &amp; Physics<br><span style="color:var(--muted);font-size:0.88rem;">Minor: Quantum Engineering · CU Boulder</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Focus Area</div>
+            <div class="stat-value">Quantum Computing R&amp;D<br><span style="color:var(--muted);font-size:0.88rem;">High-fidelity simulation &amp; scientific computing</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Currently</div>
+            <div class="stat-value">Open to full-time &amp; internship roles<br><span style="color:var(--muted);font-size:0.88rem;">Software engineering &amp; research positions</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Background</div>
+            <div class="stat-value">Transferred from FSCJ<br><span style="color:var(--muted);font-size:0.88rem;">Associate's degree · Florida</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-inner">
+      <p class="section-label">Capabilities</p>
+      <div class="divider"></div>
+      <h2 class="section-title">Tech Stack</h2>
+      <div class="skills-grid">
+        <div class="skill-group fade-in">
+          <div class="skill-group-title">Languages</div>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">C++</span><span class="tag">C</span>
+            <span class="tag">Assembly</span><span class="tag">Java</span><span class="tag">JavaScript</span>
+          </div>
+        </div>
+        <div class="skill-group fade-in">
+          <div class="skill-group-title">Web &amp; Frontend</div>
+          <div class="skill-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Handlebars</span>
+            <span class="tag">Node.js</span><span class="tag">Express</span>
+          </div>
+        </div>
+        <div class="skill-group fade-in">
+          <div class="skill-group-title">Data &amp; Scientific</div>
+          <div class="skill-tags">
+            <span class="tag">NumPy</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span>
+            <span class="tag">SciPy</span><span class="tag">Scikit-learn</span><span class="tag">h5py</span>
+          </div>
+        </div>
+        <div class="skill-group fade-in">
+          <div class="skill-group-title">Infrastructure &amp; Tools</div>
+          <div class="skill-tags">
+            <span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">SQLite</span>
+            <span class="tag">Docker</span><span class="tag">Cloud Deployment</span><span class="tag">Linux</span><span class="tag">Git</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-inner">
+      <p class="section-label">Portfolio</p>
+      <div class="divider"></div>
+      <h2 class="section-title">Selected Projects</h2>
+
+      <!-- Featured -->
+      <div class="featured-grid">
+
+        <a href="projects/daily-dev-mix.html" class="project-card featured fade-in">
+          <div class="project-card-top">
+            <span class="project-number">01 — Full-Stack Web App</span>
+            <span class="case-study-badge">Case Study</span>
+          </div>
+          <h3 class="project-name">Daily Dev Mix</h3>
+          <p class="project-desc">A Spotify companion app that builds personalized, activity-based playlists from your real listening behavior. Full OAuth 2.0 auth, real-time playback polling, PostgreSQL persistence, and deployed to Railway via Docker.</p>
+          <div class="project-stack">
+            <span class="project-tag">Node.js</span><span class="project-tag">Express</span>
+            <span class="project-tag">PostgreSQL</span><span class="project-tag">Spotify API</span>
+            <span class="project-tag">Docker</span><span class="project-tag">Railway</span>
+          </div>
+          <span class="project-cta">View Case Study</span>
+        </a>
+
+        <a href="projects/perovskite-study.html" class="project-card featured fade-in">
+          <div class="project-card-top">
+            <span class="project-number">02 — Scientific Research</span>
+            <span class="case-study-badge">Case Study</span>
+          </div>
+          <h3 class="project-name">Perovskite Solar Cell Degradation Study</h3>
+          <p class="project-desc">Semester-long experimental research project. Led all programming: data pipelines, statistical analysis with full uncertainty propagation, weighted regression, and final resistance characterization across eight weeks of measurements.</p>
+          <div class="project-stack">
+            <span class="project-tag">Python</span><span class="project-tag">NumPy</span>
+            <span class="project-tag">SciPy</span><span class="project-tag">Matplotlib</span>
+            <span class="project-tag">h5py</span><span class="project-tag">Google Colab</span>
+          </div>
+          <span class="project-cta">View Case Study</span>
+        </a>
+
+        <a href="projects/media-organizer.html" class="project-card featured fade-in">
+          <div class="project-card-top">
+            <span class="project-number">03 — Automation Tool</span>
+            <span class="case-study-badge">Case Study</span>
+          </div>
+          <h3 class="project-name">Media Organizer</h3>
+          <p class="project-desc">A cross-platform backend automation tool built for a real drone footage client. Automatically sorts media by type and rotation metadata, separates content for Instagram vs YouTube, and converts CSV captions into organized text files.</p>
+          <div class="project-stack">
+            <span class="project-tag">Python</span><span class="project-tag">exiftool</span>
+            <span class="project-tag">ffprobe</span><span class="project-tag">Cross-platform</span>
+          </div>
+          <span class="project-cta">View Case Study</span>
+        </a>
+
+      </div>
+
+      <!-- Additional -->
+      <p class="additional-label">Additional Projects</p>
+      <div class="additional-grid">
+
+        <div class="additional-card fade-in">
+          <h4 class="additional-name">War Simulation</h4>
+          <p class="additional-desc">Turn-based fantasy combat simulator in Python. Five fighter subclasses demonstrating OOP inheritance and polymorphism, Tkinter GUI, and SQLite leaderboard persistence.</p>
+          <div class="skill-tags" style="margin-bottom:0.5rem;">
+            <span class="tag">Python</span><span class="tag">Tkinter</span><span class="tag">SQLite</span>
+          </div>
+          <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="additional-link">View on GitHub</a>
+        </div>
+
+        <div class="additional-card fade-in">
+          <h4 class="additional-name">Hangman</h4>
+          <p class="additional-desc">Classic word-guessing game implementation. A focused exercise in game loop logic, state management, and user input handling.</p>
+          <div class="skill-tags" style="margin-bottom:0.5rem;">
+            <span class="tag">Python</span>
+          </div>
+          <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="additional-link">View on GitHub</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-inner">
+        <p class="section-label">Get In Touch</p>
+        <div class="divider"></div>
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="contact-subtitle">I'm currently open to full-time software engineering roles and research positions. Whether you have an opportunity, a question, or just want to talk quantum computing — reach out.</p>
+        <div class="contact-links fade-in">
+          <a href="mailto:your.email@example.com" class="contact-item">
+            <span class="contact-icon">✉</span>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">your.email@example.com</div>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" class="contact-item">
+            <span class="contact-icon">in</span>
+            <div>
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-value">linkedin.com/in/yourprofile</div>
+            </div>
+          </a>
+          <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="contact-item">
+            <span class="contact-icon">⌥</span>
+            <div>
+              <div class="contact-label">GitHub</div>
+              <div class="contact-value">github.com/GregLowman</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Gregory Lowman</p>
+    <p>Built with HTML · CSS · JS</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

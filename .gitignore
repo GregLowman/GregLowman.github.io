@@ -1,0 +1,16 @@
+# Windows Zone Identifier files (WSL downloads)
+*:Zone.Identifier
+
+# macOS system files
+.DS_Store
+
+# Claude artifact tags
+*.claude
+.claude_*
+
+# VS Code
+.vscode/
+
+# System
+Thumbs.db
+desktop.ini

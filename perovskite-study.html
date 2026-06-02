@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perovskite Study — Gregory Lowman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/project.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">GL.dev</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="project-hero">
+    <div class="hero-bg-grid"></div>
+    <div class="project-hero-inner">
+      <a href="../index.html#projects" class="back-link">← Back to Projects</a>
+      <div class="project-meta-row">
+        <span class="project-type-badge">Scientific Research</span>
+        <span class="case-study-badge">Case Study</span>
+      </div>
+      <h1 class="project-hero-title">Perovskite Solar Cell<br>Degradation Study</h1>
+      <p class="project-hero-sub">Eight weeks of experimental measurement, data pipeline engineering, and statistical analysis of solar cell performance degradation.</p>
+      <div class="project-hero-tags">
+        <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">Pandas</span>
+        <span class="tag">Matplotlib</span><span class="tag">SciPy</span><span class="tag">Scikit-learn</span>
+        <span class="tag">h5py</span><span class="tag">Google Colab</span>
+      </div>
+      <div class="project-hero-links">
+        <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="btn btn-primary">View on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-body">
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Overview</h2>
+      <p class="ps-text">This was a semester-long quantum engineering lab course project conducted in Spring 2026. Our team — B Team — fabricated a perovskite solar cell and tracked its performance degradation over eight weeks under continuous light exposure, measuring current-voltage characteristics and quantum efficiency weekly.</p>
+      <p class="ps-text">The experimental question was straightforward: how does a perovskite solar cell degrade over time, and can we model that degradation? The engineering challenge was building a rigorous data pipeline and analysis system to answer it accurately.</p>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">My Contribution</h2>
+      <p class="ps-text">I led all programming work on the project. My teammates handled physical measurements and lab procedures; I owned everything from data pipeline to final analysis:</p>
+      <ul class="ps-list">
+        <li><strong>Data collection pipelines</strong> — ingested raw J-V curve data and EQE spectra across all 8 pixels weekly, built repeatable Colab notebooks for each measurement week</li>
+        <li><strong>Uncertainty propagation</strong> — implemented full error analysis from three sources: statistical (standard error of repeated measurements), instrumental (voltage step resolution), and systematic (solar simulator calibration)</li>
+        <li><strong>Statistical analysis</strong> — weighted linear regression on PCE vs. time, chi-squared and residual analysis, z-test for two-pixel slope comparison</li>
+        <li><strong>HDF5 data handling</strong> — loaded and analyzed LED emission spectra from stressing stations using h5py, including histogram and Gaussian fitting at selected wavelengths</li>
+        <li><strong>Final project analysis</strong> — series and shunt resistance characterization over time, sigma clipping for outlier removal, advanced regression, and summary figures</li>
+      </ul>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Analysis Progression</h2>
+
+      <h3 class="ps-subtitle">Weeks 1–2: Baseline</h3>
+      <p class="ps-text">Established initial J-V and EQE baselines. EQE peaked near 475 nm (~0.95) and dropped sharply at 700 nm, consistent with literature values for perovskite absorbers. Pixel 6 was identified as the highest-performing pixel from the first measurement.</p>
+
+      <h3 class="ps-subtitle">Weeks 3–6: Degradation Tracking</h3>
+      <p class="ps-text">PCE and EQE were measured and plotted weekly as cumulative time series with full error bars from three propagated uncertainty sources. The degradation trend was visible but not yet well-characterized.</p>
+
+      <h3 class="ps-subtitle">Week 7: Regression Analysis</h3>
+      <p class="ps-text">Applied weighted linear regression to PCE vs. time for each pixel. Reduced chi-squared (χ²/ν >> 1) and patterned residuals indicated a linear model was inadequate — suggesting exponential or power-law decay would better describe the physics. This was a significant finding.</p>
+
+      <h3 class="ps-subtitle">Week 8: Spectra & Final Collection</h3>
+      <p class="ps-text">LED emission spectra from all stressing stations were loaded from HDF5 files, plotted, and analyzed. Histograms and Gaussian fits at selected wavelengths revealed bimodal distributions at certain wavelengths — indicating non-uniform light delivery across stations, which had implications for interpreting inter-pixel variability.</p>
+
+      <h3 class="ps-subtitle">Final Project</h3>
+      <p class="ps-text">Extended the weekly data into full resistance characterization (series and shunt resistance over time), applied sigma clipping for outlier removal, and produced comparative pixel regression and summary figures.</p>
+    </section>
+
+    <!-- RESULTS PLACEHOLDER -->
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Results &amp; Figures</h2>
+      <div class="screenshot-grid">
+        <div class="screenshot-placeholder">PCE vs. Time — All Pixels<br><span>Plot coming soon</span></div>
+        <div class="screenshot-placeholder">EQE Spectra — Baseline vs. Final<br><span>Plot coming soon</span></div>
+        <div class="screenshot-placeholder">Regression &amp; Residual Analysis<br><span>Plot coming soon</span></div>
+      </div>
+      <p class="ps-text" style="margin-top:1.5rem;">Full PDF exports of all lab notebooks are available in the GitHub repository — every result, plot, and analysis step is documented there without requiring access to the original raw data.</p>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Takeaways</h2>
+      <p class="ps-text">This project taught me that rigorous scientific computing is less about the algorithms and more about the methodology — propagating uncertainty correctly, choosing the right statistical model, and knowing when your model is failing (as the chi-squared analysis showed). Those habits carry directly into any data engineering role.</p>
+      <p class="ps-text">It also reinforced that working at the intersection of CS and physical science creates opportunities that neither field produces alone. The ability to write the data pipeline, run the statistics, and interpret the physics in the same sitting was what made this project work.</p>
+    </section>
+
+  </div>
+
+  <div class="project-nav-bar">
+    <div class="project-nav-inner">
+      <a href="../index.html#projects" class="pnav-back">← All Projects</a>
+      <div class="pnav-arrows">
+        <a href="daily-dev-mix.html" class="pnav-link">← Prev</a>
+        <a href="media-organizer.html" class="pnav-link">Next →</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Gregory Lowman</p>
+    <p>Built with HTML · CSS · JS</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

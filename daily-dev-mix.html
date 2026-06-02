@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Dev Mix — Gregory Lowman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/project.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">GL.dev</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- PROJECT HERO -->
+  <div class="project-hero">
+    <div class="hero-bg-grid"></div>
+    <div class="project-hero-inner">
+      <a href="../index.html#projects" class="back-link">← Back to Projects</a>
+      <div class="project-meta-row">
+        <span class="project-type-badge">Full-Stack Web App</span>
+        <span class="case-study-badge">Case Study</span>
+      </div>
+      <h1 class="project-hero-title">Daily Dev Mix</h1>
+      <p class="project-hero-sub">A Spotify companion that builds playlists from your actual listening behavior — not algorithmic guesses.</p>
+      <div class="project-hero-tags">
+        <span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">PostgreSQL</span>
+        <span class="tag">Handlebars</span><span class="tag">Spotify API</span><span class="tag">Docker</span>
+        <span class="tag">Railway</span><span class="tag">Mocha + Chai</span>
+      </div>
+      <div class="project-hero-links">
+        <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="btn btn-primary">View on GitHub</a>
+        <a href="https://daily-dev-mix-production.up.railway.app" target="_blank" rel="noopener" class="btn btn-outline">Live Demo</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="project-body">
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Overview</h2>
+      <p class="ps-text">Most music recommendation systems tell you what to listen to based on aggregate history or demographic data. Daily Dev Mix takes a different approach — it watches what you actually listen to during a specific activity and builds a playlist from that session's data.</p>
+      <p class="ps-text">The result is playlists that are genuinely tied to context. The music you listen to while working out is different from what you listen to while studying, even if it's the same artist. Daily Dev Mix captures that distinction by separating listening sessions by user-defined "vibes" and building each playlist independently over time.</p>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">My Contribution</h2>
+      <p class="ps-text">This was a six-person team project. My primary responsibilities were:</p>
+      <ul class="ps-list">
+        <li><strong>Spotify API integration</strong> — designed and implemented the full OAuth 2.0 authorization flow, token management, playback polling, recommendations querying, and playlist creation</li>
+        <li><strong>Railway deployment</strong> — configured and deployed both the Node.js app and the PostgreSQL database to Railway, including environment management and the Docker Compose setup</li>
+        <li><strong>Application architecture</strong> — established the initial Express structure, route organization, and Handlebars shell that the team built on top of</li>
+        <li><strong>Project management</strong> — coordinated team workflow, sprint planning, and milestone delivery</li>
+      </ul>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Technical Deep Dive</h2>
+
+      <h3 class="ps-subtitle">Application Flow</h3>
+      <p class="ps-text">The app follows a clean MVC pattern. Users authenticate via Spotify OAuth 2.0, create named "vibes" (activities), and start listening sessions. During a session, the app polls <code>/v1/me/player/currently-playing</code> at regular intervals, logging each track to PostgreSQL tied to that session and vibe. When the session ends, artists heard during that session are extracted and passed as seed data to the Spotify Recommendations API, which returns a curated set of tracks that is then written back to the user's Spotify account as a playlist.</p>
+
+      <h3 class="ps-subtitle">Session & Token Management</h3>
+      <p class="ps-text">Spotify access tokens are stored entirely server-side using Express session middleware — kept off the client to prevent exposure. Each protected route validates session token existence before proceeding. All Spotify communication is handled through a centralized service layer, keeping API logic cleanly separated from route handlers.</p>
+
+      <h3 class="ps-subtitle">Database Schema</h3>
+      <p class="ps-text">Four core entities: <code>users</code>, <code>vibes</code>, <code>sessions</code>, and <code>tracks</code>. This structure allows full reconstruction of listening history for any vibe, artist extraction, and seed data generation at session end. The schema is initialized on first Docker run via an SQL init script.</p>
+
+      <h3 class="ps-subtitle">Containerization & Deployment</h3>
+      <p class="ps-text">Docker Compose orchestrates two containers locally — the Node.js app and the PostgreSQL database. The same configuration forms the basis of the Railway deployment, keeping local and production environments consistent.</p>
+    </section>
+
+    <!-- SCREENSHOTS PLACEHOLDER -->
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Screenshots</h2>
+      <div class="screenshot-grid">
+        <div class="screenshot-placeholder">Dashboard — Vibe Selection<br><span>Screenshot coming soon</span></div>
+        <div class="screenshot-placeholder">Active Session — Live Playback<br><span>Screenshot coming soon</span></div>
+        <div class="screenshot-placeholder">Playlist Page — Generated Results<br><span>Screenshot coming soon</span></div>
+      </div>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Takeaways</h2>
+      <p class="ps-text">This project gave me real experience with OAuth flows and third-party API integration at a level most coursework doesn't reach. Managing access tokens securely server-side, handling token expiration gracefully, and coordinating a multi-container deployment taught me things I wouldn't have learned any other way.</p>
+      <p class="ps-text">If I were building this again, I'd implement token refresh logic more robustly from the start rather than retrofitting it, and I'd invest earlier in a more structured integration test suite for the Spotify layer specifically.</p>
+    </section>
+
+  </div>
+
+  <!-- PROJECT NAV -->
+  <div class="project-nav-bar">
+    <div class="project-nav-inner">
+      <a href="../index.html#projects" class="pnav-back">← All Projects</a>
+      <div class="pnav-arrows">
+        <span class="pnav-disabled">← Prev</span>
+        <a href="perovskite-study.html" class="pnav-link">Next →</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Gregory Lowman</p>
+    <p>Built with HTML · CSS · JS</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

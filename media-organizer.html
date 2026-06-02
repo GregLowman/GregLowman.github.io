@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Media Organizer — Gregory Lowman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/project.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">GL.dev</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="project-hero">
+    <div class="hero-bg-grid"></div>
+    <div class="project-hero-inner">
+      <a href="../index.html#projects" class="back-link">← Back to Projects</a>
+      <div class="project-meta-row">
+        <span class="project-type-badge">Automation Tool</span>
+        <span class="case-study-badge">Case Study</span>
+      </div>
+      <h1 class="project-hero-title">Media Organizer</h1>
+      <p class="project-hero-sub">A backend automation tool built for a real client — sorting drone footage into platform-ready directories automatically.</p>
+      <div class="project-hero-tags">
+        <span class="tag">Python</span><span class="tag">exiftool</span>
+        <span class="tag">ffprobe</span><span class="tag">Cross-platform</span>
+      </div>
+      <div class="project-hero-links">
+        <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="btn btn-primary">View on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-body">
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Overview</h2>
+      <p class="ps-text">This tool was built for an independent drone footage company that was manually sorting hundreds of media files after every shoot — separating photos from videos, identifying which clips were portrait vs. landscape, and organizing captions. It was tedious, error-prone, and time-consuming.</p>
+      <p class="ps-text">The solution was a Python script that automates the entire pipeline: scan, classify, sort, and rename — in one command. This is a backend-only tool with no GUI; the interface is the filesystem itself.</p>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">The Problem</h2>
+      <p class="ps-text">The client published content across two platforms with different format requirements. Instagram Reels requires vertical video (portrait orientation). YouTube prefers horizontal (landscape). Drone footage comes off the card in a mixed, flat directory with no organization. Captions were maintained in a CSV that needed to be converted to per-file text for upload workflows.</p>
+      <p class="ps-text">Doing this manually meant opening every file, checking rotation, moving it to the right folder, and cross-referencing the caption spreadsheet. For a shoot with 200+ files, that's an hour of clerical work after every job.</p>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Technical Deep Dive</h2>
+
+      <h3 class="ps-subtitle">Rotation Detection</h3>
+      <p class="ps-text">Video rotation is stored as metadata, not encoded into the actual pixel dimensions. A video shot in portrait on a drone may report as 1920x1080 but with a 90° rotation flag in its metadata. Reading pixel dimensions alone would misclassify it. The tool uses <code>exiftool</code> to extract the rotation value from the file's metadata and applies the correct orientation logic before routing.</p>
+
+      <h3 class="ps-subtitle">Directory Structure</h3>
+      <p class="ps-text">The output directory is built programmatically before any files are moved:</p>
+      <pre class="code-block">output/
+├── instagram/
+│   ├── reels/        ← portrait video
+│   └── photos/
+├── youtube/
+│   └── videos/       ← landscape video
+└── captions/         ← converted .txt files</pre>
+
+      <h3 class="ps-subtitle">Caption Processing</h3>
+      <p class="ps-text">The client maintained captions in a single CSV file. The tool parses each row and writes a corresponding <code>.txt</code> file into the captions directory, named to match the associated media file — ready to be used directly in upload workflows.</p>
+
+      <h3 class="ps-subtitle">Cross-Platform Compatibility</h3>
+      <p class="ps-text">The client used both Windows and macOS machines depending on the shoot. Path handling, exiftool invocation, and file operations were all written to work correctly on both systems without modification.</p>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Takeaways</h2>
+      <p class="ps-text">Building for a real client with a real workflow constraint is fundamentally different from building for a course rubric. The requirements came from actual pain, which made the problem clear and the success criteria concrete: does it save time, and does it handle edge cases without breaking?</p>
+      <p class="ps-text">The rotation metadata problem specifically was a good lesson — the naive solution (check dimensions) would have been wrong in ways that aren't obvious until you encounter drone footage in the wild. Reading the actual metadata was the right call, and exiftool made it clean.</p>
+    </section>
+
+  </div>
+
+  <div class="project-nav-bar">
+    <div class="project-nav-inner">
+      <a href="../index.html#projects" class="pnav-back">← All Projects</a>
+      <div class="pnav-arrows">
+        <a href="perovskite-study.html" class="pnav-link">← Prev</a>
+        <span class="pnav-disabled">Next →</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Gregory Lowman</p>
+    <p>Built with HTML · CSS · JS</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
