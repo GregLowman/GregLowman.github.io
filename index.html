@@ -37,7 +37,6 @@
       pointer-events: none;
     }
 
-    /* Two-column hero layout */
     .hero-inner {
       position: relative;
       width: 100%;
@@ -162,6 +161,44 @@
 
     .about-text p strong { color: var(--text); font-weight: 500; }
 
+    .about-extra {
+      margin-top: 1.75rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-extra-label {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+
+    .about-extra-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .about-extra-list li {
+      font-size: 0.92rem;
+      color: var(--muted);
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .about-extra-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+    }
+
     .about-stats { display: flex; flex-direction: column; gap: 1.5rem; }
 
     .stat-card {
@@ -188,7 +225,7 @@
 
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
     }
 
@@ -482,9 +519,9 @@
       <div class="hero-content">
         <span class="hero-tag">Available for Opportunities</span>
         <h1>Gregory<br><span class="accent">Lowman.</span></h1>
-        <p class="hero-title">Software Engineer &nbsp;·&nbsp; Quantum Computing Researcher &nbsp;·&nbsp; CU Boulder</p>
+        <p class="hero-title">Software Engineer &nbsp;·&nbsp; Quantum Engineering &nbsp;·&nbsp; CU Boulder</p>
         <p class="hero-bio">
-          CS &amp; Physics double major with a focus on quantum computing R&amp;D. I build software that bridges rigorous scientific thinking with modern engineering — from full-stack web applications to data pipelines and simulation tools.
+          CS &amp; Physics double major with a minor in Quantum Engineering at CU Boulder. I write software across the full stack — from deployed web applications to scientific data pipelines — and I'm building toward a career in quantum computing R&amp;D.
         </p>
         <div class="hero-cta">
           <a href="#projects" class="btn btn-primary">View My Work</a>
@@ -495,7 +532,7 @@
       <div class="hero-photo-wrap">
         <div class="hero-photo-ring">
           <img
-            src="assets/images/Headshot.jpg"
+            src="assets/images/Headshot.png"
             alt="Gregory Lowman"
             class="hero-photo"
           />
@@ -512,12 +549,21 @@
       <div class="divider"></div>
       <h2 class="section-title">About Me</h2>
       <div class="about-grid">
+
         <div class="about-text fade-in">
           <p>I'm a <strong>Computer Science and Physics double major</strong> with a minor in Quantum Engineering at the University of Colorado Boulder, transferred from Florida State College at Jacksonville where I completed my Associate's degree.</p>
-          <p>My focus is <strong>quantum computing</strong> — specifically research and development. I believe quantum systems have the potential to power high-fidelity simulations that could meaningfully accelerate both lab work and scientific research. My goal is to be part of a team making that happen.</p>
-          <p>My most recent project was a semester-long perovskite solar cell degradation study — working with teammates, I led all the programming work: data collection pipelines, statistical analysis, visualization, and interpretation of results in Python.</p>
-          <p>I'm actively developing my research skills and applying my CS background to real scientific problems, while also shipping full-stack products and automation tools along the way.</p>
+          <p>I write software across the full stack — from deployed web applications to scientific data pipelines — and I'm building toward a career in quantum computing R&amp;D. I'm looking for a team where strong engineering and rigorous science overlap.</p>
+          <div class="about-extra">
+            <p class="about-extra-label">Supporting Coursework</p>
+            <ul class="about-extra-list">
+              <li>Modern Physics &amp; Experimental Physics</li>
+              <li>Calculus III &amp; Linear Algebra</li>
+              <li>Quantum Engineering minor coursework</li>
+              <li>Quantum Scholars — student organization focused on quantum computing theory and research</li>
+            </ul>
+          </div>
         </div>
+
         <div class="about-stats fade-in">
           <div class="stat-card">
             <div class="stat-label">Education</div>
@@ -531,53 +577,53 @@
             <div class="stat-label">Currently</div>
             <div class="stat-value">Open to full-time &amp; internship roles<br><span style="color:var(--muted);font-size:0.88rem;">Software engineering &amp; research positions</span></div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Background</div>
-            <div class="stat-value">Transferred from FSCJ<br><span style="color:var(--muted);font-size:0.88rem;">Associate's degree · Florida</span></div>
-          </div>
         </div>
+
       </div>
     </div>
   </section>
 
   <!-- SKILLS -->
-  <section id="skills">
-    <div class="section-inner">
-      <p class="section-label">Capabilities</p>
-      <div class="divider"></div>
-      <h2 class="section-title">Tech Stack</h2>
-      <div class="skills-grid">
-        <div class="skill-group fade-in">
-          <div class="skill-group-title">Languages</div>
-          <div class="skill-tags">
-            <span class="tag">Python</span><span class="tag">C++</span><span class="tag">C</span>
-            <span class="tag">Assembly</span><span class="tag">Java</span><span class="tag">JavaScript</span>
-          </div>
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-label">Capabilities</p>
+    <div class="divider"></div>
+    <h2 class="section-title">Tech Stack</h2>
+    <div class="skills-grid">
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">C++</span><span class="tag">C</span>
+          <span class="tag">Assembly</span><span class="tag">Java</span><span class="tag">JavaScript</span>
         </div>
-        <div class="skill-group fade-in">
-          <div class="skill-group-title">Web &amp; Frontend</div>
-          <div class="skill-tags">
-            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Handlebars</span>
-            <span class="tag">Node.js</span><span class="tag">Express</span>
-          </div>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Web &amp; Frontend</div>
+        <div class="skill-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Handlebars</span>
+          <span class="tag">Node.js</span><span class="tag">Express</span>
+          <span class="tag">REST APIs</span><span class="tag">OAuth 2.0</span>
         </div>
-        <div class="skill-group fade-in">
-          <div class="skill-group-title">Data &amp; Scientific</div>
-          <div class="skill-tags">
-            <span class="tag">NumPy</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span>
-            <span class="tag">SciPy</span><span class="tag">Scikit-learn</span><span class="tag">h5py</span>
-          </div>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Data &amp; Scientific</div>
+        <div class="skill-tags">
+          <span class="tag">NumPy</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span>
+          <span class="tag">SciPy</span><span class="tag">Scikit-learn</span><span class="tag">h5py</span>
+          <span class="tag">Google Colab</span><span class="tag">HDF5</span>
         </div>
-        <div class="skill-group fade-in">
-          <div class="skill-group-title">Infrastructure &amp; Tools</div>
-          <div class="skill-tags">
-            <span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">SQLite</span>
-            <span class="tag">Docker</span><span class="tag">Cloud Deployment</span><span class="tag">Linux</span><span class="tag">Git</span>
-          </div>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Infrastructure &amp; Tools</div>
+        <div class="skill-tags">
+          <span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">SQLite</span>
+          <span class="tag">Docker</span><span class="tag">Railway</span><span class="tag">Cloud Deployment</span>
+          <span class="tag">Linux</span><span class="tag">Git</span><span class="tag">GitHub</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- PROJECTS -->
   <section id="projects">
