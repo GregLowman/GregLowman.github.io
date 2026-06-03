@@ -37,7 +37,18 @@
       pointer-events: none;
     }
 
-    .hero-content { position: relative; max-width: 900px; }
+    /* Two-column hero layout */
+    .hero-inner {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 5rem;
+    }
+
+    .hero-content { display: flex; flex-direction: column; }
 
     .hero-tag {
       display: inline-block;
@@ -50,12 +61,13 @@
       padding: 0.35rem 0.9rem;
       border-radius: 2px;
       margin-bottom: 1.5rem;
+      width: fit-content;
       animation: fadeUp 0.6s ease both;
     }
 
     .hero h1 {
       font-family: var(--ff-display);
-      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-size: clamp(3rem, 6vw, 6rem);
       font-weight: 900;
       line-height: 1.05;
       color: var(--text);
@@ -67,7 +79,7 @@
 
     .hero-title {
       font-family: var(--ff-mono);
-      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      font-size: clamp(0.8rem, 1.2vw, 0.95rem);
       color: var(--muted);
       letter-spacing: 0.08em;
       margin-bottom: 2rem;
@@ -75,9 +87,9 @@
     }
 
     .hero-bio {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       color: #a8b4c8;
-      max-width: 620px;
+      max-width: 560px;
       line-height: 1.8;
       margin-bottom: 2.5rem;
       animation: fadeUp 0.6s 0.3s ease both;
@@ -88,6 +100,48 @@
       gap: 1rem;
       flex-wrap: wrap;
       animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    /* Headshot */
+    .hero-photo-wrap {
+      position: relative;
+      animation: fadeUp 0.6s 0.2s ease both;
+      flex-shrink: 0;
+    }
+
+    .hero-photo-ring {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--accent), transparent 60%);
+      position: relative;
+    }
+
+    .hero-photo-ring::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,168,75,0.15);
+    }
+
+    .hero-photo-ring::after {
+      content: '';
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,168,75,0.07);
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      background: var(--bg3);
     }
 
     /* ── ABOUT ── */
@@ -162,7 +216,6 @@
     /* ── PROJECTS ── */
     #projects { background: var(--bg2); }
 
-    /* Featured */
     .featured-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
@@ -275,7 +328,6 @@
     .project-card.featured:hover .project-cta { gap: 0.7rem; }
     .project-cta::after { content: '→'; }
 
-    /* Additional projects */
     .additional-label {
       font-family: var(--ff-mono);
       font-size: 0.72rem;
@@ -384,6 +436,23 @@
 
     .contact-value { font-size: 0.92rem; color: var(--text); }
 
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-photo-wrap {
+        order: -1;
+        display: flex;
+        justify-content: center;
+      }
+      .hero-photo-ring { width: 200px; height: 200px; }
+      .hero-tag { margin-left: auto; margin-right: auto; }
+      .hero-bio { margin-left: auto; margin-right: auto; }
+      .hero-cta { justify-content: center; }
+    }
+
     @media (max-width: 768px) {
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .featured-grid { grid-template-columns: 1fr; }
@@ -408,17 +477,31 @@
   <section class="hero" id="home">
     <div class="hero-bg-grid"></div>
     <div class="hero-glow"></div>
-    <div class="hero-content">
-      <span class="hero-tag">Available for Opportunities</span>
-      <h1>Gregory<br><span class="accent">Lowman.</span></h1>
-      <p class="hero-title">Software Engineer &nbsp;·&nbsp; Quantum Computing Researcher &nbsp;·&nbsp; CU Boulder</p>
-      <p class="hero-bio">
-        CS &amp; Physics double major with a focus on quantum computing R&amp;D. I build software that bridges rigorous scientific thinking with modern engineering — from full-stack web applications to data pipelines and simulation tools.
-      </p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">View My Work</a>
-        <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="btn btn-outline">GitHub Profile</a>
+    <div class="hero-inner">
+
+      <div class="hero-content">
+        <span class="hero-tag">Available for Opportunities</span>
+        <h1>Gregory<br><span class="accent">Lowman.</span></h1>
+        <p class="hero-title">Software Engineer &nbsp;·&nbsp; Quantum Computing Researcher &nbsp;·&nbsp; CU Boulder</p>
+        <p class="hero-bio">
+          CS &amp; Physics double major with a focus on quantum computing R&amp;D. I build software that bridges rigorous scientific thinking with modern engineering — from full-stack web applications to data pipelines and simulation tools.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">View My Work</a>
+          <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="btn btn-outline">GitHub Profile</a>
+        </div>
       </div>
+
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-ring">
+          <img
+            src="assets/images/Headshot.jpg"
+            alt="Gregory Lowman"
+            class="hero-photo"
+          />
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -503,7 +586,6 @@
       <div class="divider"></div>
       <h2 class="section-title">Selected Projects</h2>
 
-      <!-- Featured -->
       <div class="featured-grid">
 
         <a href="projects/daily-dev-mix.html" class="project-card featured fade-in">
@@ -552,7 +634,6 @@
 
       </div>
 
-      <!-- Additional -->
       <p class="additional-label">Additional Projects</p>
       <div class="additional-grid">
 
