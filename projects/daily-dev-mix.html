@@ -9,6 +9,158 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/project.css">
+  <style>
+    /* ── FLOW DIAGRAM ── */
+    .flow-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .flow-step-box {
+      font-family: var(--ff-mono);
+      font-size: 0.78rem;
+      color: var(--text);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .flow-step-box.highlight {
+      border-color: rgba(212,168,75,0.4);
+      color: var(--accent);
+    }
+
+    .flow-step-desc {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .flow-arrow {
+      font-family: var(--ff-mono);
+      font-size: 0.8rem;
+      color: rgba(212,168,75,0.3);
+      padding: 0.15rem 0 0.15rem 1.1rem;
+    }
+
+    /* ── SCHEMA TABLE ── */
+    .schema-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .schema-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .schema-card-title {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(212,168,75,0.05);
+    }
+
+    .schema-card ul {
+      list-style: none;
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .schema-card ul li {
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      color: var(--tag-text);
+    }
+
+    .schema-card ul li span {
+      color: var(--muted);
+      font-size: 0.68rem;
+      margin-left: 0.4rem;
+    }
+
+    /* ── VIDEO ── */
+    .demo-video {
+      width: 100%;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      margin: 1.5rem 0;
+      display: block;
+      background: var(--bg2);
+    }
+
+    .video-caption {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: -1rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ── ENDPOINTS TABLE ── */
+    .endpoints-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-family: var(--ff-mono);
+      font-size: 0.78rem;
+    }
+
+    .endpoints-table th {
+      text-align: left;
+      color: var(--accent);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .endpoints-table td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid rgba(31,45,69,0.5);
+      color: var(--tag-text);
+      vertical-align: top;
+    }
+
+    .endpoints-table td:first-child {
+      color: var(--accent2);
+      white-space: nowrap;
+    }
+
+    .endpoints-table tr:last-child td { border-bottom: none; }
+
+    @media (max-width: 768px) {
+      .schema-grid { grid-template-columns: 1fr; }
+      .endpoints-table { font-size: 0.7rem; }
+    }
+  </style>
 </head>
 <body>
 
@@ -22,7 +174,6 @@
     </ul>
   </nav>
 
-  <!-- PROJECT HERO -->
   <div class="project-hero">
     <div class="hero-bg-grid"></div>
     <div class="project-hero-inner">
@@ -32,74 +183,184 @@
         <span class="case-study-badge">Case Study</span>
       </div>
       <h1 class="project-hero-title">Daily Dev Mix</h1>
-      <p class="project-hero-sub">A Spotify companion that builds playlists from your actual listening behavior — not algorithmic guesses.</p>
+      <p class="project-hero-sub">A Spotify companion that builds personalized, activity-based playlists from your real listening behavior — not algorithmic guesses.</p>
       <div class="project-hero-tags">
         <span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">PostgreSQL</span>
-        <span class="tag">Handlebars</span><span class="tag">Spotify API</span><span class="tag">Docker</span>
-        <span class="tag">Railway</span><span class="tag">Mocha + Chai</span>
+        <span class="tag">Handlebars</span><span class="tag">Spotify API</span><span class="tag">OAuth 2.0</span>
+        <span class="tag">Docker</span><span class="tag">Railway</span><span class="tag">Mocha + Chai</span>
       </div>
       <div class="project-hero-links">
-        <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="btn btn-primary">View on GitHub</a>
+        <a href="https://github.com/GregLowman/Daily-Dev-Mix" target="_blank" rel="noopener" class="btn btn-primary">View on GitHub</a>
         <a href="https://daily-dev-mix-production.up.railway.app" target="_blank" rel="noopener" class="btn btn-outline">Live Demo</a>
       </div>
     </div>
   </div>
 
-  <!-- CONTENT -->
   <div class="project-body">
 
     <section class="project-section fade-in">
       <h2 class="ps-title">Overview</h2>
-      <p class="ps-text">Most music recommendation systems tell you what to listen to based on aggregate history or demographic data. Daily Dev Mix takes a different approach — it watches what you actually listen to during a specific activity and builds a playlist from that session's data.</p>
+      <p class="ps-text">Most music recommendation systems tell you what to listen to based on aggregate listening history or demographic data. Daily Dev Mix takes a different approach — it watches what you actually listen to during a specific activity and builds a playlist from that session's data.</p>
       <p class="ps-text">The result is playlists that are genuinely tied to context. The music you listen to while working out is different from what you listen to while studying, even if it's the same artist. Daily Dev Mix captures that distinction by separating listening sessions by user-defined "vibes" and building each playlist independently over time.</p>
+      <p class="ps-text" style="font-size:0.85rem;color:var(--muted);">Note: The live demo requires a valid Spotify account. The app is currently in Spotify developer mode, which limits access to pre-approved accounts. Open an issue on GitHub or reach out directly to request access.</p>
+    </section>
+
+    <!-- DEMO VIDEO -->
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Demo</h2>
+      <video
+        class="demo-video"
+        controls
+        preload="metadata"
+        poster="">
+        <source src="../assets/videos/daily-dev-mix-demo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p class="video-caption">57-second walkthrough — login through playlist generation</p>
     </section>
 
     <section class="project-section fade-in">
       <h2 class="ps-title">My Contribution</h2>
-      <p class="ps-text">This was a six-person team project. My primary responsibilities were:</p>
+      <p class="ps-text">This was a six-person team project built over a semester. My primary responsibilities were:</p>
       <ul class="ps-list">
-        <li><strong>Spotify API integration</strong> — designed and implemented the full OAuth 2.0 authorization flow, token management, playback polling, recommendations querying, and playlist creation</li>
-        <li><strong>Railway deployment</strong> — configured and deployed both the Node.js app and the PostgreSQL database to Railway, including environment management and the Docker Compose setup</li>
-        <li><strong>Application architecture</strong> — established the initial Express structure, route organization, and Handlebars shell that the team built on top of</li>
-        <li><strong>Project management</strong> — coordinated team workflow, sprint planning, and milestone delivery</li>
+        <li><strong>Spotify API integration</strong> — designed and implemented the full OAuth 2.0 authorization flow, server-side token management, real-time playback polling, recommendations querying, and playlist creation and population in the user's Spotify account</li>
+        <li><strong>Railway deployment</strong> — configured and deployed both the Node.js application server and the PostgreSQL database to Railway, including environment variable management and Docker Compose configuration</li>
+        <li><strong>Application architecture</strong> — established the initial Express structure, route organization, and Handlebars shell that the rest of the team built on top of</li>
+        <li><strong>Project management</strong> — coordinated team workflow, sprint planning, and milestone delivery throughout the semester</li>
       </ul>
+    </section>
+
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Application Flow</h2>
+      <p class="ps-text">The user journey moves through seven distinct stages from landing page to playlist delivery:</p>
+
+      <div class="flow-diagram">
+        <div class="flow-step">
+          <div class="flow-step-box">Landing Page</div>
+          <div class="flow-step-desc">Introduces concept, prompts Spotify login</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-step-box highlight">Spotify OAuth 2.0</div>
+          <div class="flow-step-desc">Token exchange, access stored server-side</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-step-box">Dashboard</div>
+          <div class="flow-step-desc">Select or create a vibe, start session</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-step-box highlight">Active Session</div>
+          <div class="flow-step-desc">Polls /currently-playing, logs tracks to PostgreSQL</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-step-box highlight">Session End</div>
+          <div class="flow-step-desc">Artists extracted, Recommendations API called</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-step-box">Playlist Page</div>
+          <div class="flow-step-desc">Generated playlist pushed to Spotify account</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-step-box">Profile</div>
+          <div class="flow-step-desc">Session history organized by vibe</div>
+        </div>
+      </div>
     </section>
 
     <section class="project-section fade-in">
       <h2 class="ps-title">Technical Deep Dive</h2>
 
-      <h3 class="ps-subtitle">Application Flow</h3>
-      <p class="ps-text">The app follows a clean MVC pattern. Users authenticate via Spotify OAuth 2.0, create named "vibes" (activities), and start listening sessions. During a session, the app polls <code>/v1/me/player/currently-playing</code> at regular intervals, logging each track to PostgreSQL tied to that session and vibe. When the session ends, artists heard during that session are extracted and passed as seed data to the Spotify Recommendations API, which returns a curated set of tracks that is then written back to the user's Spotify account as a playlist.</p>
-
       <h3 class="ps-subtitle">Session & Token Management</h3>
-      <p class="ps-text">Spotify access tokens are stored entirely server-side using Express session middleware — kept off the client to prevent exposure. Each protected route validates session token existence before proceeding. All Spotify communication is handled through a centralized service layer, keeping API logic cleanly separated from route handlers.</p>
+      <p class="ps-text">Spotify access tokens are stored entirely server-side using Express session middleware — never exposed to the client. Each request to a protected route validates that a valid session token exists before proceeding. This approach keeps tokens off the client entirely and ensures authenticated context persists across requests without requiring re-authorization.</p>
+
+      <h3 class="ps-subtitle">Spotify Integration Layer</h3>
+      <p class="ps-text">All Spotify API communication is handled through a centralized service layer, cleanly separated from route handlers. This layer manages the full lifecycle of a session's music data:</p>
+      <ul class="ps-list">
+        <li>OAuth authorization redirect and token exchange</li>
+        <li>Polling <code>/v1/me/player/currently-playing</code> at regular intervals during active sessions</li>
+        <li>Extracting unique artists from session track logs at session end</li>
+        <li>Passing artists as seed data to <code>/v1/recommendations</code></li>
+        <li>Creating a playlist via <code>/v1/users/{id}/playlists</code> and populating it with recommended tracks</li>
+      </ul>
+
+      <h3 class="ps-subtitle">Spotify API Endpoints Used</h3>
+      <table class="endpoints-table">
+        <thead>
+          <tr>
+            <th>Endpoint</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>/authorize</td><td>OAuth 2.0 authorization redirect</td></tr>
+          <tr><td>/api/token</td><td>Access token exchange</td></tr>
+          <tr><td>/v1/me</td><td>Fetch authenticated user profile</td></tr>
+          <tr><td>/v1/me/player/currently-playing</td><td>Poll playback state during session</td></tr>
+          <tr><td>/v1/recommendations</td><td>Generate tracks from artist seeds</td></tr>
+          <tr><td>/v1/users/{id}/playlists</td><td>Create playlist in user's account</td></tr>
+          <tr><td>/v1/playlists/{id}/tracks</td><td>Add recommended tracks to playlist</td></tr>
+        </tbody>
+      </table>
 
       <h3 class="ps-subtitle">Database Schema</h3>
-      <p class="ps-text">Four core entities: <code>users</code>, <code>vibes</code>, <code>sessions</code>, and <code>tracks</code>. This structure allows full reconstruction of listening history for any vibe, artist extraction, and seed data generation at session end. The schema is initialized on first Docker run via an SQL init script.</p>
+      <p class="ps-text">Four core entities power the application's data model:</p>
+      <div class="schema-grid">
+        <div class="schema-card">
+          <div class="schema-card-title">users</div>
+          <ul>
+            <li>spotify_user_id <span>primary key</span></li>
+            <li>display_name</li>
+            <li>access_token</li>
+          </ul>
+        </div>
+        <div class="schema-card">
+          <div class="schema-card-title">vibes</div>
+          <ul>
+            <li>vibe_id <span>primary key</span></li>
+            <li>user_id <span>foreign key</span></li>
+            <li>name</li>
+          </ul>
+        </div>
+        <div class="schema-card">
+          <div class="schema-card-title">sessions</div>
+          <ul>
+            <li>session_id <span>primary key</span></li>
+            <li>user_id <span>foreign key</span></li>
+            <li>vibe_id <span>foreign key</span></li>
+            <li>start_time, end_time</li>
+          </ul>
+        </div>
+        <div class="schema-card">
+          <div class="schema-card-title">tracks</div>
+          <ul>
+            <li>track_id <span>primary key</span></li>
+            <li>session_id <span>foreign key</span></li>
+            <li>spotify_track_id</li>
+            <li>track_name, artist_name</li>
+          </ul>
+        </div>
+      </div>
 
       <h3 class="ps-subtitle">Containerization & Deployment</h3>
-      <p class="ps-text">Docker Compose orchestrates two containers locally — the Node.js app and the PostgreSQL database. The same configuration forms the basis of the Railway deployment, keeping local and production environments consistent.</p>
-    </section>
+      <p class="ps-text">Docker Compose orchestrates two containers locally — the Node.js app server and the PostgreSQL database. The database initializes on first run via an SQL init script that creates all tables and seeds default data. The same Docker configuration forms the basis of the Railway deployment, keeping local and production environments consistent.</p>
 
-    <!-- SCREENSHOTS PLACEHOLDER -->
-    <section class="project-section fade-in">
-      <h2 class="ps-title">Screenshots</h2>
-      <div class="screenshot-grid">
-        <div class="screenshot-placeholder">Dashboard — Vibe Selection<br><span>Screenshot coming soon</span></div>
-        <div class="screenshot-placeholder">Active Session — Live Playback<br><span>Screenshot coming soon</span></div>
-        <div class="screenshot-placeholder">Playlist Page — Generated Results<br><span>Screenshot coming soon</span></div>
-      </div>
+      <h3 class="ps-subtitle">Testing</h3>
+      <p class="ps-text">The test suite uses Mocha as the test runner and Chai for assertions, covering core route behavior and Spotify API integration points. Tests run automatically on <code>docker-compose up</code> and can be run independently with <code>npm test</code>.</p>
     </section>
 
     <section class="project-section fade-in">
       <h2 class="ps-title">Takeaways</h2>
-      <p class="ps-text">This project gave me real experience with OAuth flows and third-party API integration at a level most coursework doesn't reach. Managing access tokens securely server-side, handling token expiration gracefully, and coordinating a multi-container deployment taught me things I wouldn't have learned any other way.</p>
-      <p class="ps-text">If I were building this again, I'd implement token refresh logic more robustly from the start rather than retrofitting it, and I'd invest earlier in a more structured integration test suite for the Spotify layer specifically.</p>
+      <p class="ps-text">This project gave me hands-on experience with OAuth 2.0 at a level most coursework doesn't reach. Managing access tokens securely server-side, handling the full authorization code flow, and coordinating a multi-container deployment taught me things I wouldn't have learned building toy projects. The Spotify integration layer in particular forced me to think carefully about separation of concerns — keeping API logic isolated from route handlers made the codebase significantly easier for the rest of the team to work with.</p>
+      <p class="ps-text">If I were building this again I'd implement token refresh logic more robustly from the start rather than retrofitting it, and I'd invest earlier in a more structured integration test suite specifically for the Spotify layer. The polling interval logic for playback state also has room for improvement — a websocket approach would be cleaner than repeated HTTP polling.</p>
     </section>
 
   </div>
 
-  <!-- PROJECT NAV -->
   <div class="project-nav-bar">
     <div class="project-nav-inner">
       <a href="../index.html#projects" class="pnav-back">← All Projects</a>

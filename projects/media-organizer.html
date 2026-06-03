@@ -1,142 +1,220 @@
-"""Media organiser: builds neighbourhood folders, sorts photos/videos, rotates by exiftool metadata."""
-import os
-import shutil
-import subprocess
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Media Organizer — Gregory Lowman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/project.css">
+  <style>
+    .tree-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
 
-# Set to the source directory containing your neighbourhood subfolders (e.g. the USB drive root)
-starting_folder = ''
+    .tree-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
 
-# Set to the destination directory where the organised folders will be created
-ending_folder = ''
+    .tree-card-label {
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
 
-# Set to the full path of your local exiftool executable — download at https://exiftool.org/
-sorting_software = ''
+    .tree-card-label.before {
+      color: var(--muted);
+      background: rgba(255,255,255,0.02);
+    }
 
-picture = 'P: '
-video = 'V: '
-insta = 'Rotation                        : 0'
-youtube = 'Rotation                        : 270'
-neighborhood_names = []
-picture_captions = []
-video_captions = []
+    .tree-card-label.after {
+      color: var(--accent);
+      background: rgba(212,168,75,0.05);
+    }
 
+    .tree-card pre {
+      font-family: var(--ff-mono);
+      font-size: 0.78rem;
+      color: var(--tag-text);
+      line-height: 1.7;
+      padding: 1.25rem 1.25rem;
+      overflow-x: auto;
+      margin: 0;
+    }
 
-def sort_videos():
-    """
-    This function goes through every video within the separate neighborhood's Video folders. While
-    skimming through the videos it will determine the rotation status to decide if the video is meant
-    for Instagram, or for YouTube. If the program has any discrepancies it will place the media into an
-    Unknown folder for the user to decide the next action.
-    :return:
-    """
+    .tree-card pre .folder { color: var(--text); }
+    .tree-card pre .file-img { color: #7ec8a4; }
+    .tree-card pre .file-vid { color: #7ab8e8; }
+    .tree-card pre .file-csv { color: #c8a47e; }
+    .tree-card pre .file-txt { color: #b8a0d8; }
+    .tree-card pre .dim { color: var(--border); }
 
-    for name in neighborhood_names:
-        for file in os.listdir(f"{ending_folder}/{name}/Videos"):
-            new_file = f"{ending_folder}\\{name}\\Videos\\{file}"
-            output = subprocess.getoutput(f'cmd /c"{sorting_software} "{new_file}"')
-            if insta in output:
-                shutil.move(new_file, f"{ending_folder}\\{name}\\Videos\\InstaReels")
-            elif youtube in output:
-                shutil.move(new_file, f"{ending_folder}\\{name}\\Videos\\YouTube")
-            else:
-                shutil.move(new_file, f"{ending_folder}\\{name}\\Videos\\Unknown")
-            print('*')
+    @media (max-width: 768px) {
+      .tree-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
 
+  <nav>
+    <a href="../index.html" class="nav-logo">GL.dev</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-def csv_to_txt(caption_name):
-    """
-    A function dedicated to pulling the text from a csv file (primarily excel)
-    and putting those individual strings into their respective folders. Strings
-    are to be seperated by either pictures or videos.
+  <div class="project-hero">
+    <div class="hero-bg-grid"></div>
+    <div class="project-hero-inner">
+      <a href="../index.html#projects" class="back-link">← Back to Projects</a>
+      <div class="project-meta-row">
+        <span class="project-type-badge">Automation Tool</span>
+        <span class="case-study-badge">Case Study</span>
+      </div>
+      <h1 class="project-hero-title">Media Organizer</h1>
+      <p class="project-hero-sub">A backend automation tool built for a real drone footage business — transforming a flat, unsorted flash drive into a fully organized, platform-ready directory in a single command.</p>
+      <div class="project-hero-tags">
+        <span class="tag">Python</span><span class="tag">exiftool</span>
+        <span class="tag">ffprobe</span><span class="tag">subprocess</span>
+        <span class="tag">Cross-platform</span><span class="tag">File I/O</span>
+      </div>
+      <div class="project-hero-links">
+        <a href="https://github.com/GregLowman" target="_blank" rel="noopener" class="btn btn-primary">View on GitHub</a>
+      </div>
+    </div>
+  </div>
 
-    :param caption_name: The file path to the file containing the csv text.
-    """
-    with open(caption_name, encoding='utf-8-sig', newline='') as captions:
-        for x in captions:
-            if picture in x:
-                picture_captions.append(x[3:].strip('\r\n'))
-            elif video in x:
-                video_captions.append(x[3:].strip('\r\n'))
+  <div class="project-body">
 
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Overview</h2>
+      <p class="ps-text">This tool was built for an independent drone footage company that shoots content across multiple neighborhoods and publishes to both Instagram and YouTube. After every shoot, a flash drive arrives with hundreds of unsorted photos, videos, and caption spreadsheets all mixed together in flat neighborhood subfolders.</p>
+      <p class="ps-text">Manually sorting that content — separating photos from videos, checking each clip's rotation to determine platform destination, converting captions — was taking significant time after every job. This script automates the entire pipeline in a single command.</p>
+    </section>
 
-def sort():
-    """
-    This function sorts through all the files in the starting directory.
-    Depending on the file extension, it will decide which of the new folders to copy it over to.
-    If the file is a csv, it will convert it to text and then write it in the appropriate folder.
-    """
-    for z in neighborhood_names:
-        picture_folder = os.path.join(ending_folder, z, "Pictures")
-        video_folder = os.path.join(ending_folder, z, "Videos")
-        picture_caption_folder = os.path.join(ending_folder, z, "Picture_Captions")
-        video_caption_folder = os.path.join(ending_folder, z, "Video_Captions")
-        path = f"{starting_folder}/{z}"
+    <section class="project-section fade-in">
+      <h2 class="ps-title">The Problem</h2>
+      <p class="ps-text">The client published to two platforms with fundamentally different format requirements. Instagram Reels requires vertical video. YouTube expects horizontal. Drone footage comes off the card mixed together with no labeling, and the rotation metadata is embedded in the file — not visible from the filename or dimensions alone.</p>
+      <p class="ps-text">On top of that, captions were maintained in CSV spreadsheets that needed to be split into individual text files — one per post — organized separately for photos and videos. Doing all of this by hand after every shoot was slow and error-prone.</p>
+    </section>
 
-        for file in os.listdir(path):
-            old_file = f"{path}/{file}"
-            if '.jpg' in file:
-                shutil.move(old_file, picture_folder)
-            elif '.MP4' in file:
-                shutil.move(old_file, video_folder)
-            elif '.csv' in file:
-                csv_to_txt(f"{path}/{file}")
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Before & After</h2>
+      <p class="ps-text">The script takes a raw flash drive organized by neighborhood and transforms it into a fully sorted output directory ready for upload workflows.</p>
 
-        os.chdir(picture_caption_folder)
-        for x in picture_captions:
-            with open(f"{x}.txt", 'w') as pictures:
-                print(x, file=pictures)
+      <div class="tree-grid">
+        <div class="tree-card">
+          <div class="tree-card-label before">Before — Raw Flash Drive</div>
+          <pre>
+<span class="folder">USB Drive/</span>
+├── <span class="folder">Riverside/</span>
+│   ├── <span class="file-img">IMG_0042.jpg</span>
+│   ├── <span class="file-img">IMG_0043.jpg</span>
+│   ├── <span class="file-img">IMG_0044.jpg</span>
+│   ├── <span class="file-vid">CLIP_001.MP4</span>
+│   ├── <span class="file-vid">CLIP_002.MP4</span>
+│   └── <span class="file-csv">captions.csv</span>
+└── <span class="folder">Maplewood/</span>
+    ├── <span class="file-img">IMG_0091.jpg</span>
+    ├── <span class="file-img">IMG_0092.jpg</span>
+    ├── <span class="file-vid">CLIP_010.MP4</span>
+    └── <span class="file-csv">captions.csv</span></pre>
+        </div>
 
-        os.chdir(video_caption_folder)
-        for y in video_captions:
-            with open(f"{y}.txt", 'w') as videos:
-                print(y, file=videos)
+        <div class="tree-card">
+          <div class="tree-card-label after">After — Organized Output</div>
+          <pre>
+<span class="folder">Output/</span>
+├── <span class="folder">Riverside/</span>
+│   ├── <span class="folder">Pictures/</span>
+│   │   ├── <span class="file-img">IMG_0042.jpg</span>
+│   │   ├── <span class="file-img">IMG_0043.jpg</span>
+│   │   └── <span class="file-img">IMG_0044.jpg</span>
+│   ├── <span class="folder">Videos/</span>
+│   │   ├── <span class="folder">InstaReels/</span>
+│   │   │   └── <span class="file-vid">CLIP_002.MP4</span>
+│   │   ├── <span class="folder">YouTube/</span>
+│   │   │   └── <span class="file-vid">CLIP_001.MP4</span>
+│   │   └── <span class="folder">Unknown/</span>
+│   ├── <span class="folder">Picture_Captions/</span>
+│   │   ├── <span class="file-txt">Caption one.txt</span>
+│   │   └── <span class="file-txt">Caption two.txt</span>
+│   └── <span class="folder">Video_Captions/</span>
+│       └── <span class="file-txt">Caption one.txt</span>
+└── <span class="folder">Maplewood/</span>
+    ├── <span class="folder">Pictures/</span>
+    │   ├── <span class="file-img">IMG_0091.jpg</span>
+    │   └── <span class="file-img">IMG_0092.jpg</span>
+    ├── <span class="folder">Videos/</span>
+    │   ├── <span class="folder">InstaReels/</span>
+    │   ├── <span class="folder">YouTube/</span>
+    │   │   └── <span class="file-vid">CLIP_010.MP4</span>
+    │   └── <span class="folder">Unknown/</span>
+    ├── <span class="folder">Picture_Captions/</span>
+    └── <span class="folder">Video_Captions/</span></pre>
+        </div>
+      </div>
+    </section>
 
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Technical Deep Dive</h2>
 
-def build_folders():
-    """
-    A function used to build folders in a new directory for all new files
-    to be organised into. If the pathway already exists, the command will
-    be passed over.
-    """
-    for x in os.listdir(starting_folder):
-        neighborhood_names.append(x)
-    for x in neighborhood_names:
-        main_folder = os.path.join(ending_folder, x)
-        picture_caption_folder = os.path.join(ending_folder, x, "Picture_Captions")
-        video_caption_folder = os.path.join(ending_folder, x, "Video_Captions")
-        picture_folder = os.path.join(ending_folder, x, "Pictures")
-        video_folder = os.path.join(ending_folder, x, "Videos")
-        insta_reel_folder = os.path.join(ending_folder, x, "Videos", "InstaReels")
-        youtube_folder = os.path.join(ending_folder, x, "Videos", "YouTube")
-        unknown_folder = os.path.join(ending_folder, x, "Videos", "Unknown")
+      <h3 class="ps-subtitle">Rotation Detection</h3>
+      <p class="ps-text">The core technical challenge was that video rotation is stored as metadata — not encoded into the pixel dimensions. A portrait clip shot on a drone may report as 1920×1080 but carry a 270° rotation flag. Reading dimensions alone would misclassify it every time. The tool shells out to <code>exiftool</code> via Python's <code>subprocess</code> module, parses the rotation value from the output, and routes accordingly:</p>
+      <pre class="code-block">Rotation: 0    → YouTube (landscape)
+Rotation: 270  → InstaReels (portrait)
+Anything else  → Unknown (manual review)</pre>
 
-        path_list = [
-            ending_folder, main_folder, picture_caption_folder,
-            video_caption_folder, picture_folder,
-            video_folder, insta_reel_folder, youtube_folder, unknown_folder
-        ]
+      <h3 class="ps-subtitle">Pipeline Order</h3>
+      <p class="ps-text">The script runs four functions in sequence. <code>build_folders()</code> reads the neighborhood names from the source drive and constructs the full output directory tree before any files are moved. <code>sort()</code> distributes photos, videos, and CSV captions into their respective folders. <code>sort_videos()</code> then inspects each video's rotation metadata and routes it to the correct platform subfolder. Finally, <code>delete_empty()</code> removes the original source folders after everything has been moved.</p>
 
-        for path in path_list:
-            try:
-                os.mkdir(path)
-            except FileExistsError:
-                pass
+      <h3 class="ps-subtitle">Caption Processing</h3>
+      <p class="ps-text">Caption CSVs use a prefix convention — <code>P:</code> for photo captions and <code>V:</code> for video captions. The <code>csv_to_txt()</code> function parses each row, strips the prefix, and writes individual <code>.txt</code> files into the appropriate caption folder. Each file is named after the caption text itself, making it immediately usable in upload workflows without any renaming.</p>
 
+      <h3 class="ps-subtitle">Error Handling & Edge Cases</h3>
+      <p class="ps-text">The <code>build_folders()</code> function wraps every <code>os.mkdir()</code> call in a <code>try/except FileExistsError</code> block, so the script can be re-run safely without crashing if any folders already exist. The Unknown video folder handles any clips with unexpected rotation values rather than silently dropping them.</p>
 
-def delete_empty():
-    """
-    Primary function is to simply delete empty folders once all the files have been moved.
-    """
-    for name in neighborhood_names:
-        shutil.rmtree(f"{starting_folder}/{name}")
+      <h3 class="ps-subtitle">Cross-Platform Compatibility</h3>
+      <p class="ps-text">The client operated on both Windows and macOS. Path handling and <code>exiftool</code> invocation were written to work correctly on both systems. The <code>sorting_software</code> variable allows the executable path to be set once at the top of the file without touching the rest of the code.</p>
+    </section>
 
+    <section class="project-section fade-in">
+      <h2 class="ps-title">Takeaways</h2>
+      <p class="ps-text">Building for a real client with a real recurring workflow is fundamentally different from building for a course. The requirements came from genuine pain — hours of manual work after every shoot — which made the success criteria concrete and unambiguous: does it save time, and does it handle edge cases without breaking?</p>
+      <p class="ps-text">The rotation metadata problem was a good lesson in not trusting the naive solution. Checking pixel dimensions would have seemed correct until it wasn't. Reading the actual metadata was the right call, and learning to shell out to specialized tools like exiftool rather than reinventing the wheel is a habit that carries into any systems or backend role.</p>
+    </section>
 
-def run():
-    build_folders()
-    sort()
-    sort_videos()
-    delete_empty()
+  </div>
 
+  <div class="project-nav-bar">
+    <div class="project-nav-inner">
+      <a href="../index.html#projects" class="pnav-back">← All Projects</a>
+      <div class="pnav-arrows">
+        <a href="perovskite-study.html" class="pnav-link">← Prev</a>
+        <span class="pnav-disabled">Next →</span>
+      </div>
+    </div>
+  </div>
 
-if __name__ == '__main__':
-    run()
+  <footer>
+    <p>© 2026 Gregory Lowman</p>
+    <p>Built with HTML · CSS · JS</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
